@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>limen · the claude office</title>
+<style>
+  :root {
+    --ink: #f4ead6;
+    --dim: #a294b8;
+    --bg: #140f24;
+    --panel: rgba(30, 22, 48, 0.94);
+    --edge: #4a3a63;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+    font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    overflow: hidden;
+    /* Match the canvas: no smoothing anywhere in the office. */
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+  }
+  #stage { display: block; width: 100vw; height: 100vh; image-rendering: pixelated; }
+
+  header {
+    position: fixed; top: 0; left: 0; right: 0; display: flex; gap: 16px;
+    align-items: baseline; padding: 10px 14px; pointer-events: none;
+    background: linear-gradient(to bottom, rgba(20,15,36,0.9), transparent);
+  }
+  header h1 { margin: 0; font-size: 14px; letter-spacing: 2px; }
+  header h1 span { color: var(--dim); letter-spacing: 0; font-weight: normal; }
+  #status { color: var(--dim); }
+  #status.offline { color: #ff9b8a; }
+  #clock { margin-left: auto; color: var(--dim); }
+
+  #tooltip, #panel {
+    position: fixed; background: var(--panel); border: 1px solid var(--edge);
+    border-radius: 6px; padding: 9px 11px; max-width: 320px;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.5);
+  }
+  #tooltip { pointer-events: none; z-index: 5; }
+  #panel { right: 14px; top: 46px; width: 260px; }
+  #panel h2 { margin: 0 0 2px; font-size: 13px; }
+  #panel .path { word-break: break-all; margin-bottom: 8px; }
+  #panel .who { border-top: 1px solid var(--edge); padding-top: 7px; margin-top: 7px; }
+  .quote { color: #e8d7a8; margin-top: 3px; }
+  .dim { color: var(--dim); }
+  .hint { color: var(--dim); margin-top: 10px; font-size: 11px; }
+  .hidden { display: none; }
+
+  footer {
+    position: fixed; bottom: 8px; left: 14px; color: var(--dim);
+    pointer-events: none; font-size: 11px;
+  }
+</style>
+</head>
+<body>
+  <canvas id="stage"></canvas>
+
+  <header>
+    <h1>LIMEN <span>· the claude office</span></h1>
+    <div id="status">opening up…</div>
+    <div id="clock"></div>
+  </header>
+
+  <div id="tooltip" class="hidden"></div>
+  <aside id="panel" class="hidden"></aside>
+  <footer>click a zone to step inside · esc to pull back</footer>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
